@@ -1,6 +1,13 @@
 import openai
 import streamlit as st
 
+st.set_page_config(
+    page_title="NutriGod",
+    page_icon="📊",
+    layout="wide",  # Opcional: Puedes personalizar el diseño
+    initial_sidebar_state="expanded",  # Opcional: Expande la barra lateral por defecto
+)
+
 # Configuración de OpenAI
 openai.api_key = st.secrets["OPENAI_API_KEY"]
 
@@ -30,10 +37,52 @@ def interactuar_con_modelo(prompt):
 st.sidebar.title("Barra de opciones")
 opciones = st.sidebar.radio("Seleccione una actividad", ["inicio", "Carga de Datos", "Plan Nutricional", "Ayuda"])
 if opciones == "inicio":
-    control = False
+    #st.title("Nutrigod")
+    st.header("Bienvenido a Nutrigod: Tu Compañero en la Gestión de la Diabetes")
+    st.write("En Nutrigod, nuestra misión es simple pero poderosa: mejorar la calidad de vida de las personas con diabetes a través de la tecnología y la inteligencia artificial. ¿Cómo lo logramos? A través de Nutrigod, una innovadora aplicación diseñada para brindarte un control efectivo de tu salud.")
+    col1, col2 = st.columns([1, 2])
+    url = "https://i.postimg.cc/ZRRhSkw7/logo1.jpg"
+    with col1:
+        st.image(url, caption='', use_column_width=True)
+        with col2:
+            if st.button("Comenzar"):
+                st.write(
+                    """Características Clave de Nutrigod:
+
+Generación de Recomendaciones Personalizadas: Nutrigod utiliza inteligencia artificial para ofrecerte recomendaciones de alimentación personalizadas, teniendo en cuenta tus preferencias, necesidades nutricionales y tu perfil de salud.
+
+Seguimiento de Glucosa en Sangre: Mantén un control constante de tus niveles de glucosa en sangre. Nutrigod te proporciona herramientas para registrar y analizar tus resultados en tiempo real.
+
+Chatbot de Ayuda: Nuestro chatbot está aquí para responder a tus preguntas y proporcionarte asesoramiento en cualquier momento. Es como tener a un experto en diabetes siempre a tu lado.
+
+Beneficios para Ti:
+
+Al utilizar Nutrigod, puedes esperar una serie de beneficios clave:
+
+Mejor Gestión de tu Salud: Nutrigod te brinda las herramientas y conocimientos para tomar decisiones informadas sobre tu salud y bienestar. Te ayuda a mantener un control efectivo de tu diabetes.
+
+Dieta Personalizada: Disfruta de una dieta que se adapta a tus necesidades y preferencias. Las recomendaciones de alimentos se ajustan a ti.
+
+Mayor Conocimiento sobre tu Diabetes: Nutrigod te educa y te empodera para comprender mejor tu diabetes y cómo manejarla de manera efectiva.
+
+Facilidad de Uso:
+
+Nutrigod está diseñado pensando en ti, sea cual sea tu nivel de familiaridad con la tecnología. Es intuitivo, amigable y fácil de usar. No importa si eres un experto en tecnología o si recién estás comenzando, Nutrigod te acompañará en tu viaje.
+
+Nuestro Compromiso con tu Salud:
+
+En Nutrigod, estamos dedicados a tu bienestar. Nuestra aplicación se basa en la innovación y la mejora constante. Trabajamos incansablemente para proporcionarte las mejores herramientas y recursos para el manejo de la diabetes.
+
+¡Únete a Nutrigod!
+
+¿Estás listo para tomar el control de tu salud y vivir una vida más saludable con diabetes? ¡Únete a Nutrigod hoy mismo! Puedes descargar la aplicación, registrarte o explorar más sobre cómo Nutrigod puede marcar la diferencia en tu vida.""")
+                st.write("Nutrigod es una innovadora aplicación que utiliza inteligencia artificial para brindar recomendaciones de alimentación personalizadas y ayudarte a mantener un control efectivo de tu diabetes.")
+                st.session_state.opciones = "Carga de Datos"
+
 
 if opciones == "Carga de Datos":
     st.title("CARGA DE DATOS")
+    st.write("Por favor complete todos los campos con sus datos para poder generar su plan nutricional:")
         # Inicializar o cargar datos del usuario
     user_data = st.session_state.get("user_data", {
         "Tipo de diabetes": "",
@@ -81,8 +130,10 @@ if opciones == "Carga de Datos":
     
 
 if opciones == "Plan Nutricional":
-    st.title("NutriGod")
-    st.subheader("Plan nutricional")
+    st.title("NutriGod - Plan Nutricional")
+    url = "https://i.postimg.cc/ZRRhSkw7/logo1.jpg"
+    st.image(url, caption='', use_column_width=False, width=150) 
+    #st.subheader("Plan nutricional")
     if "user_data" not in st.session_state:
         st.warning("Por favor, cargue los datos en la opción 'Carga de Datos' primero.")
     else:
@@ -96,9 +147,12 @@ if opciones == "Plan Nutricional":
             message_placeholder.markdown(respuesta + "▌")
          st.session_state.messages.append({"role": "assistant", "content": respuesta})
 
-
 if opciones == "Ayuda":
     st.title("CHATBOT - AYUDA")
+    st.header("Hola!")
+    st.write("¡Bienvenido a nuestra sección de ayuda! Estamos aquí para responder a tus preguntas y brindarte la asistencia que necesitas. ¿Tienes alguna duda o necesitas orientación? ¡No dudes en preguntar! Estamos aquí para ayudarte.")
+    url = "https://i.gifer.com/jVo.gif"
+    st.image(url, caption='', use_column_width=False, width=150)
     if "messages" not in st.session_state:
         st.session_state.messages = []
 

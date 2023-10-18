@@ -1,7 +1,6 @@
-import openai
 import streamlit as st
-from PIL import Image
-
+#from PIL import Image
+import openai
 
 #configuracion de navegacion
 st.set_page_config(
